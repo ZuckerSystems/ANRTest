@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
+import okhttp3.*
+import java.io.IOException
 import java.time.LocalDateTime
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickExecButton(view: android.view.View) {
         val start = System.currentTimeMillis()
-        val editText: EditText = findViewById<EditText>(R.id.editTextNumber)
+        // 通信3回
+        for (i in 1..3) {
+            callAPI()
+        }
+
         var num : Int = findViewById<EditText>(R.id.editTextNumber).text.toString().toIntOrNull()?:0
 
         Log.d("num", num.toString())
@@ -40,6 +47,33 @@ class MainActivity : AppCompatActivity() {
             .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
             .map(charPool::get)
             .joinToString("");
+
+    }
+
+    // https://www.jma.go.jp/bosai/quake/data/list.json
+    // 気象庁の地震データを全部持ってくる
+    private fun callAPI() {
+        val client: OkHttpClient = OkHttpClient()
+        val url:String = "https://www.jma.go.jp/bosai/quake/data/list.json"
+        val request: Request = Request.Builder().url(url).build()
+        val call: Call = client.newCall(request)
+        /* メインスレッド同期呼び出し */
+        /*
+        val response = call.execute()
+        Log.d("res:", response!!.body!!.string())
+
+         */
+        /* 非同期 */
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("res:", "API call error")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("res:", response!!.body!!.string())
+            }
+            })
+
 
     }
 
