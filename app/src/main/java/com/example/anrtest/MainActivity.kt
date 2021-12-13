@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickSecondButton(view: android.view.View) {
         var num : Int = findViewById<TextView>(R.id.textView2).text.toString().toIntOrNull()?:0
         Log.d("num2", num.toString())
-        num = num + 1
+        num += 1
         findViewById<TextView>(R.id.textView2).text = num.toString()
     }
 }
