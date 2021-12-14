@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         val request: Request = Request.Builder().url(url).build()
         val call: Call = client.newCall(request)
         /* メインスレッド同期呼び出し */
-        /*
+        /* 通信を同期呼び出しすると、実機ではシステムエラー扱いとされます
         val response = call.execute()
         Log.d("res:", response!!.body!!.string())
 
