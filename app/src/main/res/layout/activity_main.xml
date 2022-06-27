@@ -36,11 +36,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="103dp"
-        android:layout_height="51dp"
+        android:layout_width="102dp"
+        android:layout_height="52dp"
         android:layout_marginTop="24dp"
         android:onClick="onClickExecButton"
-        android:text="実行"
+        android:text="実行1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
